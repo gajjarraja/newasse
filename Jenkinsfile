@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        mvn 'Maven 3.6.3'
+        maven 'Maven 3.6.3' 
     }
     stages {
         stage('Build Maven') {
@@ -23,8 +23,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'slkrt2211', variable: 'dockerhubpwd')]) {
-                    sh 'docker login -u rajgaar -p ${dockerhubpwd}'
+                    withCredentials([string(credentialsId: 'rajgajjar', variable: 'dockerhubpwd')]) {
+                    sh 'docker login -u rajgjjar -p ${dockerhubpwd}'
 }
                     sh 'docker push rajgajjar/docker'
                 }
