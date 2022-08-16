@@ -13,7 +13,7 @@ pipeline {
         }
     }
     environment {
-        registry = "rajgajjar/my-app"
+        registry = "rajgajjar/docker"
         registryCredential = 'docker-hub'
         dockerImage = ''
     }
@@ -21,7 +21,7 @@ pipeline {
     stages {
         stage('Cloning Git') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/RAJGAJJARSWAMI/dev2ASS.git']]])       
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/RAJGAJJARSWAMI/newasse.git']]])       
             }
         }
     stage('Building image') {
