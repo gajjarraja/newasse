@@ -21,7 +21,7 @@ pipeline {
     stages {
         stage('Cloning Git') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/RAJGAJJARSWAMI/newasse.git']]])       
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/RAJGAJJARSWAMI/newasse.git']]])       
             }
         }
     stage('Building image') {
@@ -42,15 +42,15 @@ pipeline {
     }
      stage('docker stop container') {
          steps {
-            sh 'docker ps -f name=mypythonappContainer -q | xargs --no-run-if-empty docker container stop'
-            sh 'docker container ls -a -fname=mypythonappContainer -q | xargs -r docker container rm'
+            sh 'docker ps -f name=tomcat -q | xargs --no-run-if-empty docker container stop'
+            sh 'docker container ls -a -fname=tomcat -q | xargs -r docker container rm'
          }
        }
     
     stage('Docker Run') {
      steps{
          script {
-            dockerImage.run("-p 8096:5000 --rm --name mypythonappContainer")
+            dockerImage.run("-p 8080:5000 --rm --name tomcat")
          }
       }
     }
