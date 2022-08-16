@@ -18,8 +18,7 @@ pipeline {
         dockerImage = ''
     }
     
-    stages {
-        stage('Cloning Git') {
+	stages('Cloning Git') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RAJGAJJARSWAMI/newasse.git']]])
             }
