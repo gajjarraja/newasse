@@ -1,73 +1,52 @@
 pipeline {
-  agent {
-    kubernetes {
-      yaml '''
-        apiVersion: v1
-        kind: Pod
-        spec:
-          containers:
-          - name: maven
-            image: maven:alpine
-            command:
-            - cat
-            tty: true
-          - name: docker
-            image: docker:latest
-            command:
-            - cat
-            tty: true
-            volumeMounts:
-             - mountPath: /var/run/docker.sock
-               name: docker-sock
-          volumes:
-          - name: docker-sock
-            hostPath:
-              path: /var/run/docker.sock    
-        '''
+    agent any
+    tools {
+        maven 'MAVEN'
     }
-  }
-  stages {
-    stage('Clone') {
-      steps {
-        container('maven') {
-          git branch: 'main', changelog: false, poll: false, url: 'https://github.com/RAJGAJJARSWAMI/newasse.git'
+    stages {
+        stage('Build Maven') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '9b9be042-01de-4e2b-881d-118a79fb4fb6', url: 'https://github.com/Rutu2211/DevOps-Assessment.git']]])
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+	//	sh "mvn install"    
+	//	sh "mvn clean package"
+		 
+            }
         }
-      }
-    }  
-    stage('Build-Jar-file') {
-      steps {
-        container('maven') {
-          sh 'mvn package'
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t slkrt2211/testrepo .'
+                }
+            }
         }
-      }
-    }
-    stage('Build-Docker-Image') {
-      steps {
-        container('docker') {
-          sh 'docker build -t rajgajjar/docker:latest .'
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'slkrt2211', variable: 'dockerhubpwd')]) {
+                    sh 'docker login -u slkrt2211 -p ${dockerhubpwd}'
+}
+                    sh 'docker push slkrt2211/testrepo'
+                }
+            }
         }
-      }
+	stage('File transfer into minikube server') {
+            steps {
+	        sh 'scp -r /var/lib/jenkins/workspace/jenkins-docker/* ubuntu@172.31.17.56:/home/ubuntu/project'
+			}		
+	} 
+	stage('Login into minikube server and run helm chart') {
+            steps {
+	    sh """
+	    #!/bin/bash
+ 	    ssh ubuntu@172.31.17.56 << EOF
+       	    cd project
+            helm install mytasknew demochart
+	    exit
+	    << EOF
+	    """
+			}
+		}
     }
-    stage('Login-Into-Docker') {
-      steps {
-        container('docker') {
-          sh 'docker login -u rajgajjar -p docker_hub'
-      }
-    }
-    }
-     stage('Push-Images-Docker-to-DockerHub') {
-      steps {
-        container('docker') {
-          sh 'docker push rajgajjar/docker:latest'
-      }
-    }
-     }
-  }
-    post {
-      always {
-        container('docker') {
-          sh 'docker logout'
-      }
-      }
-    }
+
 }
