@@ -1,64 +1,73 @@
 pipeline {
-    agent {
-        docker {
-            image 'maven:3.6.3' 
-            args '-v /root/.m2:/root/.m2' 
-        }
+  agent {
+    kubernetes {
+      yaml '''
+        apiVersion: v1
+        kind: Pod
+        spec:
+          containers:
+          - name: maven
+            image: maven:alpine
+            command:
+            - cat
+            tty: true
+          - name: docker
+            image: docker:latest
+            command:
+            - cat
+            tty: true
+            volumeMounts:
+             - mountPath: /var/run/docker.sock
+               name: docker-sock
+          volumes:
+          - name: docker-sock
+            hostPath:
+              path: /var/run/docker.sock    
+        '''
     }
-    stages {
-        stage('Build') { 
-            steps {
-                sh 'mvn -B -DskipTests clean package' 
-            }
+  }
+  stages {
+    stage('Clone') {
+      steps {
+        container('maven') {
+          git branch: 'main', changelog: false, poll: false, url: 'https://github.com/RAJGAJJARSWAMI/newasse.git'
         }
-    }
-    environment {
-        registry = "rajgajjar/docker"
-        registryCredential = 'docker-hub'
-        dockerImage = ''
-    }
-    
-	stages('Cloning Git') {
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/RAJGAJJARSWAMI/newasse.git']]])
-            }
-        }
-    stage('Building image') {
-      steps{
-        script {
-          dockerImage = docker.build registry
+      }
+    }  
+    stage('Build-Jar-file') {
+      steps {
+        container('maven') {
+          sh 'mvn package'
         }
       }
     }
-    stage('Upload Image') {
-     steps{    
-         script {
-            docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
-            }
+    stage('Build-Docker-Image') {
+      steps {
+        container('docker') {
+          sh 'docker build -t rajgajjar/docker:latest .'
         }
       }
     }
-     stage('docker stop container') {
-         steps {
-            sh 'docker ps -f name=tomcat -q | xargs --no-run-if-empty docker container stop'
-            sh 'docker container ls -a -fname=tomcat -q | xargs -r docker container rm'
-         }
-       }
-    
-    stage('Docker Run') {
-     steps{
-         script {
-            dockerImage.run("-p 8080:5000 --rm --name tomcat")
-         }
+    stage('Login-Into-Docker') {
+      steps {
+        container('docker') {
+          sh 'docker login -u rajgajjar -p docker_hub'
       }
     }
-	stage ('Deploying onto k8s') {
-		steps{
-			dir ('/var/lib/jenkins/workspace/dockerpiplinejob') {
-			sh "kubectl apply -f deploy.yml"
-			}
-			}
-		}
-	}
-
+    }
+     stage('Push-Images-Docker-to-DockerHub') {
+      steps {
+        container('docker') {
+          sh 'docker push rajgajjar/docker:latest'
+      }
+    }
+     }
+  }
+    post {
+      always {
+        container('docker') {
+          sh 'docker logout'
+      }
+      }
+    }
+}
