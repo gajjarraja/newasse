@@ -3,6 +3,17 @@ pipeline {
 	 tools { 
       maven '3.6.3'
     }
+    stage("clone the Repo") {
+
+            steps {
+
+                sh "rm -rf *"
+
+                sh "git clone https://github.com/parag-vyas/assess.git"
+
+                   }
+
+            }
     stages {
         stage('Build Maven') {
             steps {
