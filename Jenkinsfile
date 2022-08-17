@@ -18,6 +18,7 @@ stages {
         stage('Build Docker Image') {
             steps {
                 script {
+		    dir '/var/lib/jenkins/workspace/assesment2/newasse'	
 	            sh 'docker build -t rajgajjar/newapp2 .'
                 }
             }
