@@ -19,7 +19,7 @@ stages {
             steps {
                 script {
 		    dir '/var/lib/jenkins/workspace/assesment2/newasse'
-	            sh 'docker build -t rajgajjar/docker .'
+	            sh 'docker build -t rajgajjar/newapp2 .'
                 }
             }
         }
@@ -29,7 +29,7 @@ stages {
                     withCredentials([string(credentialsId: 'rajgajjar', variable: 'dockerhubpwd')]) {
                     sh 'docker login -u rajgjjar -p ${dockerhubpwd}'
 }
-                    sh 'docker push rajgajjar/docker'
+                    sh 'docker push rajgajjar/newapp2'
                 }
             }
         }
