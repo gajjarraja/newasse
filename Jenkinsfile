@@ -31,8 +31,7 @@ stages {
         }
 	stage('File transfer into minikube server') {
             steps {
-		    sshagent(['kubernetes_server']){
-		    sh 'ssh StrictHostKeyChecking=no root@172.31.1.90' 	    
+		    sshagent(['kubernetes_server']){ 	    
 	            sh 'scp -r /var/lib/jenkins/workspace/assesment2/* root@172.31.1.90:/opt/'
 		    sh """
 	    		#!/bin/bash
