@@ -3,6 +3,7 @@ pipeline {
 	 tools { 
       maven '3.6.3'
     }
+	
     stage("clone the Repo") {
 
             steps {
@@ -14,7 +15,7 @@ pipeline {
                    }
 
             }
-    stages {
+         {
         stage('Build Maven') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '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', url: 'https://github.com/RAJGAJJARSWAMI/newasse.git']]])
