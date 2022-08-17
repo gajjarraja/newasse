@@ -25,7 +25,7 @@ stages {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'dockerid', url: 'https://registry.hub.docker.com') {
-                    sh 'docker push rajgajjar/new1234:latest'
+			    app.push("{env.latest}")
 		    }
                     
                 }
