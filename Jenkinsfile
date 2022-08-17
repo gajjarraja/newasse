@@ -28,6 +28,7 @@ stages {
                 script {
                     withCredentials([string(credentialsId: 'rajgajjar', variable: 'dockerhub')]) {
                     sh 'docker login -u rajgjjar -p ${dockerhub}'
+		    }
                     sh 'docker push rajgajjar/new1234'
                 }
             }
@@ -48,7 +49,7 @@ stages {
 	    exit
 	    << EOF
 	    """
-	    }
+	    
 			}
 		}
     }
