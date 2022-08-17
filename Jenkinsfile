@@ -31,9 +31,10 @@ stages {
         }
 	stage('File transfer into minikube server') {
             steps {
-		    sshagent(['mini'])
+		    sshagent(['mini']){
 	            sh 'scp -r /var/lib/jenkins/workspace/assesment2/* ubuntu@172.31.1.90:/home/ubuntu/'
-			}		
+		    }
+		 }		
 	} 
 	stage('Login into minikube server and run helm chart') {
             steps {
