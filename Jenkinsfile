@@ -10,6 +10,7 @@ pipeline {
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
 	//	sh "mvn install"    
 	//	sh "mvn clean package"
+		sh "rm -rf *"    
 		 
             }
         }
