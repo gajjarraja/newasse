@@ -17,15 +17,15 @@ stages {
         stage ('Build Docker Image') {
             steps {
                 script {
-		   sh 'docker build -t rajgajjar/new1234 .'
+		   sh 'docker build -t rajgajjar/new1234:latest .'
                 }
             }
         }
         stage('Push Docker Image') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'dockerid', url: 'https://registry.hub.docker.com') {
-			    app.push("{env.latest}")
+                    withDockerRegistry(credentialsId: 'dockerid', url: '') {
+			   sh 'docker push rajgajjar/new1234:latest'
 		    }
                     
                 }
