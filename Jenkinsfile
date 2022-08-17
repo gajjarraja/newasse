@@ -33,20 +33,18 @@ stages {
             steps {
 		    sshagent(['mini']){
 	            sh 'scp -r /var/lib/jenkins/workspace/assesment2/* ubuntu@172.31.1.90:/home/ubuntu/'
+		    sh """
+	    		#!/bin/bash
+ 	    		ssh ubuntu@172.31.1.90 << EOF
+       	    		cd project
+            		helm install mytasknew demochart
+	    		exit
+	    		<< EOF
+	    		"""
 		    }
 		 }		
 	} 
-	stage('Login into minikube server and run helm chart') {
-            steps {
-	    sh """
-	    #!/bin/bash
- 	    ssh ubuntu@172.31.1.90 << EOF
-       	    cd project
-            helm install mytasknew demochart
-	    exit
-	    << EOF
-	    """
-	    
+		    
 			}
 		}
     }
