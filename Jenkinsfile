@@ -14,7 +14,7 @@ stage{
 	//	sh "mvn clean package"
 		sh "rm -rf *"  
 		sh "git clone https://github.com/RAJGAJJARSWAMI/newasse.git"   
-		 
+	    } 
             }
         }
         stage('Build Docker Image') {
