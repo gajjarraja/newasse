@@ -15,7 +15,7 @@ stages {
 	    } 
             }
         
-        stage('Build Docker Image') {
+        stage ('Build Docker Image') {
             steps {
                 script {
 		    dir '/var/lib/jenkins/workspace/assesment2/newasse'	
@@ -28,8 +28,9 @@ stages {
                 script {
                     withCredentials([string(credentialsId: 'rajgajjar', variable: 'dockerhub')]) {
                     sh 'docker login -u rajgjjar -p ${dockerhub}'
+		    sh 'docker push rajgajjar/new1234'
 		    }
-                    sh 'docker push rajgajjar/new1234'
+                    
                 }
             }
         }
