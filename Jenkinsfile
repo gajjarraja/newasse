@@ -9,8 +9,7 @@ stages {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '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', url: 'https://github.com/RAJGAJJARSWAMI/newasse.git']]])
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
 	//	sh "mvn install"    
-	//	sh "mvn clean package"
-		sh "rm -rf *"  
+	//	sh "mvn clean package"  
 		sh "git clone https://github.com/RAJGAJJARSWAMI/newasse.git"   
 	    } 
             }
