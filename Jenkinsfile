@@ -10,16 +10,14 @@ stages {
                 sh "mvn install" 
 		sh "mvn -Dmaven.test.failure.ignore=true clean package"
 		   
-	//	sh "mvn clean package"  
-		 
+	 
 	    } 
             }
         
         stage ('Build Docker Image') {
             steps {
                 script {
-		    dir '/var/lib/jenkins/workspace/assesment2/'	
-	            sh 'docker build -t rajgajjar/new1234 .'
+		   sh 'docker build -t rajgajjar/new1234 .'
                 }
             }
         }
