@@ -25,8 +25,7 @@ stages {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'dockerid', url: 'https://registry.hub.docker.com') {
-                    sh 'docker login -u rajgjjar -p ${dockerid}'
-		    sh 'docker push rajgajjar/new1234'
+                    sh 'docker push rajgajjar/new1234'
 		    }
                     
                 }
