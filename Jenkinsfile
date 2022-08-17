@@ -33,7 +33,8 @@ stages {
         }
 	stage('File transfer into minikube server') {
             steps {
-	        sh 'scp -r /var/lib/jenkins/workspace/assesment2/* ubuntu@172.31.1.90:/home/ubuntu/'
+		    sshagent(['mini'])
+	            sh 'scp -r /var/lib/jenkins/workspace/assesment2/* ubuntu@172.31.1.90:/home/ubuntu/'
 			}		
 	} 
 	{
