@@ -3,14 +3,7 @@ pipeline {
 	 tools { 
       maven '3.6.3'
     }
-    stage("clone the Repo") {
-	    steps {
-                sh "rm -rf *"
-                sh "git clone https://github.com/RAJGAJJARSWAMI/newasse.git"
-
-                   }
-
-            }
+    
          {
         stage('Build Maven') {
             steps {
@@ -18,7 +11,8 @@ pipeline {
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
 	//	sh "mvn install"    
 	//	sh "mvn clean package"
-		sh "rm -rf *"    
+		sh "rm -rf *"  
+		sh "git clone https://github.com/RAJGAJJARSWAMI/newasse.git"   
 		 
             }
         }
