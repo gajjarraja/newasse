@@ -24,8 +24,8 @@ stages {
         stage('Push Docker Image') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'dockerid', url: 'https://hub.docker.com/repository/docker/rajgajjar/new1234') {
-                    sh 'docker login -u rajgjjar -p ${dhub}'
+                    withDockerRegistry(credentialsId: 'dockerid', url: 'https://registry.hub.docker.com') {
+                    sh 'docker login -u rajgjjar -p ${dockerid}'
 		    sh 'docker push rajgajjar/new1234'
 		    }
                     
