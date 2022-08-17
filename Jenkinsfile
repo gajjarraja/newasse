@@ -38,6 +38,7 @@ stages {
 	        sh 'scp -r /var/lib/jenkins/workspace/jenkins-docker/* ubuntu@172.31.1.90:/home/ubuntu/project'
 			}		
 	} 
+	{
 	stage('Login into minikube server and run helm chart') {
             steps {
 	    sh """
@@ -51,4 +52,5 @@ stages {
 			}
 		}
     }
+}
 }
