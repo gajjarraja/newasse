@@ -9,8 +9,6 @@ stages {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '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', url: 'https://github.com/RAJGAJJARSWAMI/newasse.git']]])
                 sh "mvn install" 
 		sh "mvn -Dmaven.test.failure.ignore=true clean package"
-		   
-	 
 	    } 
             }
         
@@ -37,7 +35,6 @@ stages {
 	            sh 'scp -r /var/lib/jenkins/workspace/assesment2/* ubuntu@172.31.1.90:/home/ubuntu/'
 			}		
 	} 
-	{
 	stage('Login into minikube server and run helm chart') {
             steps {
 	    sh """
