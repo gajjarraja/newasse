@@ -24,8 +24,8 @@ stages {
         stage('Push Docker Image') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'rajgajjar', variable: 'dockerhub')]) {
-                    sh 'docker login -u rajgjjar -p ${dockerhub}'
+                    withCredentials([usernameColonPassword(credentialsId: '4bce45e4-3a25-45a7-8d83-9233b0c3b4bc', variable: 'dhub')]) {
+                    sh 'docker login -u rajgjjar -p ${dhub}'
 		    sh 'docker push rajgajjar/new1234'
 		    }
                     
