@@ -29,7 +29,7 @@ stages {
                     withCredentials([string(credentialsId: 'rajgajjar', variable: 'dockerhubpwd')]) {
                     sh 'docker login -u rajgjjar -p ${dockerhubpwd}'
 }
-                    sh 'docker push rajgajjar/newapp2'
+                    sh 'docker push rajgajjar/newapp2:'
                 }
             }
         }
