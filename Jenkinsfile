@@ -14,7 +14,7 @@ stages {
 		sh "git clone https://github.com/RAJGAJJARSWAMI/newasse.git"   
 	    } 
             }
-        }
+        
         stage('Build Docker Image') {
             steps {
                 script {
@@ -50,3 +50,4 @@ stages {
 			}
 		}
     }
+}
