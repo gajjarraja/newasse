@@ -32,11 +32,11 @@ stages {
 	stage('File transfer into minikube server') {
             steps {
 		    sshagent(['kubernetes_server']){ 	    
-	            sh 'scp -r /var/lib/jenkins/workspace/assesment2/* gajjarraj_se@10.182.0.15:/opt/'
+	            sh 'scp -r /var/lib/jenkins/workspace/assesment2/* gajjarraj_se@10.182.0.15:/home/gajjarraj_se'
 		    sh """
 	    		#!/bin/bash
  	    		ssh gajjarraj_se@10.182.0.15<< EOF
-       	    		cd opt
+       	    		cd home/gajjarraj_se
             		helm install mytasknew demochart
 	    		exit
 	    		<< EOF
