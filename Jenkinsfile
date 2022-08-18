@@ -35,7 +35,7 @@ stages {
 	            //sh 'scp -r /var/lib/jenkins/workspace/newasses2 gajjarraj_se@34.125.147.240:/home/gajjarraj_se'
 		    sh """
 	    		#!/bin/bash
- 	    		ssh rajjarraj_se@34.125.147.240<< EOF
+ 	    		ssh -t rajgajjar_se@34.125.147.240<< EOF
        	    		cd home/gajjarraj_se
             		helm install mytasknew demochart
 	    		exit
