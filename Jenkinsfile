@@ -22,7 +22,7 @@ stages {
         stage('Push Docker Image') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'dockerid', url: 'https://hub.docker.com/repository/docker/rajgajjar/new1234'){
+                    withDockerRegistry(credentialsId: 'dockerid', url: ''){
 			   sh 'docker push rajgajjar/new1234:latest'
 		    }
                     
