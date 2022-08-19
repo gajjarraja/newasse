@@ -1,3 +1,3 @@
 FROM tomcat
-COPY target/bookstore-example-1.0-SNAPSHOT.war /usr/local/tomcat/webapps
+COPY /home/ubuntu/newasse/SampleWebApp.war  /usr/local/tomcat/webapps
 CMD ["catalina.sh", "run"]
