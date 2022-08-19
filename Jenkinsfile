@@ -32,7 +32,7 @@ stages {
 	stage('File transfer into minikube server') {
             steps {
 		    sshagent(['kubernetes_server1']){ 	    
-	            sh 'scp -r /var/lib/jenkins/workspace/newasses2 ubuntu@172.31.5.136:/home/gajjarraj_se'
+	            sh 'scp -r /var/lib/jenkins/workspace/newasses2 ubuntu@172.31.5.136:/home/ubuntu'
 		    sh """
 	    		#!/bin/bash
  	    		ssh -t ubuntu@172.31.5.136<< EOF
