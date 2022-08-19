@@ -1,26 +1,19 @@
-FROM ubuntu:16.04
-
-# Install prerequisites
-RUN apt-get -y update && apt-get -y upgrade
-RUN apt-get -y install openjdk-8-jdk wget
-RUN apt-get -y install curl
-RUN mkdir /usr/local/tomcat
-RUN wget https://downloads.apache.org/tomcat/tomcat-10/v10.0.20/bin/apache-tomcat-10.0.20.tar.gz -O /tmp/tomcat.tar.gz
-RUN cd /tmp  tar xvfz tomcat.tar.gz
-RUN cp -Rv /tmp/apache-tomcat-10.0.20/* /usr/local/tomcat/
-
-EXPOSE 8080
-# java
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
-
-# Define default command.
-CMD ["bash"]
+FROM centos
 
 MAINTAINER gajjarraj.se@gmail.com
 
+RUN mkdir /opt/tomcat/
 
-WORKDIR /usr/local/tomcat/webapps
+WORKDIR /opt/tomcat
+RUN curl -O https://www-eu.apache.org/dist/tomcat/tomcat-8/v8.5.40/bin/apache-tomcat-8.5.40.tar.gz
+RUN tar xvfz apache*.tar.gz
+RUN mv apache-tomcat-8.5.40/* /opt/tomcat/.
+RUN yum -y install java
+RUN java -version
+
+WORKDIR /opt/tomcat/webapps
 RUN curl -O -L https://github.com/RAJGAJJARSWAMI/newasse/blob/main/SampleWebApp.war
 
+EXPOSE 8080
 
-CMD ["https://net.cloudinfrastructureservices.co.uk/usr/local/tomcat/bin/catalina.sh", "run"]
+CMD ["/opt/tomcat/bin/catalina.sh", "run"]
