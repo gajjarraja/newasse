@@ -37,7 +37,7 @@ stages {
 	    		#!/bin/bash
  	    		ssh -t ubuntu@172.31.5.136<< EOF
        	    		cd /home/ubuntu
-            		helm install buildachart demochart
+            		helm install my-cherry-chart buildachart/ --values buildachart/values.yaml
 	    		exit
 	    		<< EOF
 	    		"""
