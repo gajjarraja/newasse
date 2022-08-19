@@ -1,19 +1,37 @@
-FROM centos
+FROM tomcat:8.5.4-jre8
 
 MAINTAINER gajjarraj.se@gmail.com
+ENV GITHUB_REPO https://github.com/RAJGAJJARSWAMI/newasse/blob/main/SampleWebApp.war
+ENV APP_FILE spring-music.war
+ENV TERM xterm
+ENV JAVA_OPTS -Djava.security.egd=file:/dev/./urandom
 
-RUN mkdir /opt/tomcat/
+RUN apt-get update -qq \
+  && apt-get install -qqy curl wget \
+  && apt-get clean \
+  \
+  && touch /var/log/spring-music.log \
+  && chmod 666 /var/log/spring-music.log \
+  \
+  && wget -q -O /usr/local/tomcat/webapps/ROOT.war ${GITHUB_REPO}/${APP_FILE} \
+  && mv /usr/local/tomcat/webapps/ROOT /usr/local/tomcat/webapps/_ROOT
 
-WORKDIR /opt/tomcat
-RUN curl -O https://www-eu.apache.org/dist/tomcat/tomcat-8/v8.5.40/bin/apache-tomcat-8.5.40.tar.gz
-RUN tar xvfz apache*.tar.gz
-RUN mv apache-tomcat-8.5.40/* /opt/tomcat/.
-RUN yum -y install java
-RUN java -version
+COPY tomcat-users.xml /usr/local/tomcat/conf/tomcat-users.xml
 
-WORKDIR /opt/tomcat/webapps
-RUN curl -O -L https://github.com/RAJGAJJARSWAMI/newasse/blob/main/SampleWebApp.war
+# install Filebeat
+ENV FILEBEAT_VERSION=filebeat_1.2.3_amd64.deb
+RUN curl -L -O https://download.elastic.co/beats/filebeat/${FILEBEAT_VERSION} \
+ && dpkg -i ${FILEBEAT_VERSION} \
+ && rm ${FILEBEAT_VERSION}
 
-EXPOSE 8080
+# configure Filebeat
+ADD filebeat.yml /etc/filebeat/filebeat.yml
 
-CMD ["/opt/tomcat/bin/catalina.sh", "run"]
+# CA cert
+RUN mkdir -p /etc/pki/tls/certs
+ADD logstash-beats.crt /etc/pki/tls/certs/logstash-beats.crt
+
+# start Filebeat
+ADD ./start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+CMD [ "/usr/local/bin/start.sh" ]
