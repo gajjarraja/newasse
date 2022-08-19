@@ -36,7 +36,7 @@ stages {
 		    sh """
 	    		#!/bin/bash
  	    		ssh -t ubuntu@172.31.5.136<< EOF
-       	    		cd home/gajjarraj_se
+       	    		cd /home/ubuntu
             		helm install mytasknew demochart
 	    		exit
 	    		<< EOF
