@@ -37,7 +37,7 @@ stages {
 	    		#!/bin/bash
  	    		ssh -t ubuntu@172.31.5.136<< EOF
        	    		cd /home/ubuntu
-            		helm install myapp1-chart  myapp1/ --values myapp1/values.yaml
+            		helm install phoenix-chart phoenixnap/ --values phoenixnap/values.yaml
 	    		exit
 	    		<< EOF
 	    		"""
