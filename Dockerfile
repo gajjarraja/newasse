@@ -1,9 +1,15 @@
-FROM tomcat:8.0-alpine
+FROM ubuntu
 
-LABEL maintainer=”gajjarraj.se@gmail.com”
+ENV DEBIAN_FRONTEND=noninteractive
 
-ADD SampleWebApp.war /usr/local/tomcat/webapps/
+RUN apt-get update
 
-EXPOSE 8080
+RUN apt-get install apache2 -y
 
-CMD [“catalina.sh”, “run”]
+RUN apt-get install apache2-utils -y
+
+RUN apt-get clean
+
+EXPOSE 80
+
+CMD ["apache2ctl","-D","FOREGROUND"]
