@@ -1,3 +1,2 @@
-FROM tomcat
-COPY SampleWebApp.war /usr/local/tomcat/webapps
-CMD ["catalina.sh", "run"]
+FROM bitnami/tomcat:latest
+COPY  SampleWebApp.war /opt/bitnami/tomcat/webapps_default
