@@ -12,9 +12,7 @@ spec:
     - port: 80
       targetPort: 
   type: NodePort
-   matchLabels:
-      app: tomcat 
-  template:
+    template:
     metadata:
       labels:
         app: tomcat 
