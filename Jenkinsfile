@@ -15,7 +15,7 @@ stages {
         stage ('Build Docker Image') {
             steps {
                 script {
-		   sh 'docker build -t rajgajjar/new1234:latest .'
+		   sh 'docker build -t rajgajjar/tomcat:latest .'
                 }
             }
         }
@@ -23,7 +23,7 @@ stages {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'dockerid1', url: ''){
-			   sh 'docker push rajgajjar/new1234:latest'
+			   sh 'docker push rajgajjar/tomcat:latest'
 		    }
                     
                 }
