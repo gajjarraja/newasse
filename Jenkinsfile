@@ -36,7 +36,7 @@ stages {
 		    sh """
 	    		#!/bin/bash
  	    		ssh -t ubuntu@172.31.5.136<< EOF
-       	    		cd /home/ubuntu
+       	    		cd /home/ubuntu/newasse
             		helm install tomcat-chart tomcat/ --values tomcat/values.yaml
 	    		exit
 	    		<< EOF
