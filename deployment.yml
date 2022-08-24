@@ -8,9 +8,9 @@ spec:
   selector:
     app: tomcat
   ports:
-    - port: 80
-      targetPort: 80
-      nodePort: 30004
+    - port: 8080
+      targetPort: 8080
+      nodePort: 
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -20,7 +20,7 @@ metadata:
   labels:
     app: tomcat
 spec:
-  replicas: 4
+  replicas: 1
   selector:
     matchLabels:
       app: tomcat
