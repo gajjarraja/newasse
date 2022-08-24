@@ -5,9 +5,13 @@ metadata:
   labels:
     app: tomcat 
 spec:
-  type: LoadBalancer
   replicas: 1
   selector:
+  app: tomcat
+  ports:
+    - port: 8765
+      targetPort: 9376
+  type: LoadBalancer 
    matchLabels:
       app: tomcat 
   template:
