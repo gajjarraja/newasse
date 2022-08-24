@@ -11,7 +11,7 @@ spec:
   ports:
     - port: 80
       targetPort: 
-  type: LoadBalancer 
+  type: NodePort
    matchLabels:
       app: tomcat 
   template:
