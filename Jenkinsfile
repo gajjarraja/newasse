@@ -31,7 +31,7 @@ stages {
         }
 	stage('Remove Unused docker image') {
       steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
+        sh "docker rmi rajgajjar/tomcat"
 		}
 		}
 	stage('File transfer into minikube server') {
