@@ -29,11 +29,6 @@ stages {
                 }
             }
         }
-	stage('Remove Unused docker image') {
-      steps{
-        sh "docker rmi rajgajjar/tomcat1"
-		}
-		}
 	stage('File transfer into minikube server') {
             steps {
 		    dir ('/var/lib/jenkins/workspace/assesment2'){
