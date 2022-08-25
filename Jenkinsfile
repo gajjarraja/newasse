@@ -31,7 +31,7 @@ stages {
         }
 	stage('File transfer into minikube server') {
             steps {
-		    dir ('/var/lib/jenkins/workspace/assesment2@tmp')
+		    dir ('/var/lib/jenkins/workspace/assesment2'){
 		    sshagent(['kubernetes_server1']){ 	    
 	            sh 'scp -r tomcat ubuntu@172.31.17.153:/home/ubuntu'
 		    sh """
@@ -42,6 +42,7 @@ stages {
 	    		exit
 	    		<< EOF
 	    		"""
+		    }
 		    }
 		 }		
 	} 
