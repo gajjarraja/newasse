@@ -38,10 +38,10 @@ stages {
             steps {
 		    dir ('/var/lib/jenkins/workspace/assesment2'){
 		    sshagent(['kubernetes_server1']){ 	    
-	            sh 'scp -r tomcat ubuntu@18.144.52.89:/home/ubuntu'
+	            sh 'scp -r tomcat ubuntu@172.31.17.153:/home/ubuntu'
 		    sh """
 	    		#!/bin/bash
- 	    		ssh -t ubuntu@18.144.52.89<< EOF
+ 	    		ssh -t ubuntu@172.31.17.153<< EOF
        	    		cd /home/ubuntu/newasse
             		helm install tomcat-chart tomcat/ --values tomcat/values.yaml
 	    		exit
