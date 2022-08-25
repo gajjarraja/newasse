@@ -15,7 +15,7 @@ stages {
         stage ('Build Docker Image') {
             steps {
                 script {
-		   sh 'docker build -t rajgajjar/tomcat:latest .'
+		   sh 'docker build -t rajgajjar/tomcat1:latest .'
                 }
             }
         }
@@ -23,7 +23,7 @@ stages {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'dockerid1', url: ''){
-			   sh 'docker push rajgajjar/tomcat:latest'
+			   sh 'docker push rajgajjar/tomcat1:latest'
 		    }
                     
                 }
@@ -31,7 +31,7 @@ stages {
         }
 	stage('Remove Unused docker image') {
       steps{
-        sh "docker rmi rajgajjar/tomcat"
+        sh "docker rmi rajgajjar/tomcat1"
 		}
 		}
 	stage('File transfer into minikube server') {
