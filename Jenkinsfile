@@ -38,7 +38,7 @@ stages {
             steps {
 		    dir ('/var/lib/jenkins/workspace/assesment2'){
 		    sshagent(['kubernetes_server1']){ 	    
-	            sh 'scp -r tomcat ubuntu@172.31.17.153:/home/ubuntu'
+	            sh 'scp -o StrictHostKeyChecking=no tomcat ubuntu@172.31.17.153:/home/ubuntu'
 		    sh """
 	    		#!/bin/bash
  	    		ssh -t ubuntu@172.31.17.153<< EOF
