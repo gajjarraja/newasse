@@ -29,6 +29,11 @@ stages {
                 }
             }
         }
+	stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $registry:$BUILD_NUMBER"
+		}
+		}
 	stage('File transfer into minikube server') {
             steps {
 		    dir ('/var/lib/jenkins/workspace/assesment2'){
