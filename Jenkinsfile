@@ -32,10 +32,10 @@ stages {
 	stage('File transfer into minikube server') {
             steps {
 		    sshagent(['kubernetes_server1']){ 	    
-	            sh 'scp -r /var/lib/jenkins/workspace/assesment2@tmp ubuntu@172.31.5.136:/home/ubuntu'
+	            sh 'scp -r /var/lib/jenkins/workspace/assesment2@tmp ubuntu@172.31.6.32:/home/ubuntu'
 		    sh """
 	    		#!/bin/bash
- 	    		ssh -t ubuntu@172.31.5.136<< EOF
+ 	    		ssh -t ubuntu@172.31.6.32<< EOF
        	    		cd /home/ubuntu/newasse
             		helm install tomcat-chart tomcat/ --values tomcat/values.yaml
 	    		exit
