@@ -34,7 +34,7 @@ stages {
 		    dir ('/var/lib/jenkins/workspace/assesment2'){
 		    sshagent(['kubernetes_server1']){ 	    
 	            sh 'scp -r tomcat ubuntu@172.31.7.40:/home/ubuntu'
-		    sh 'ssh root@172.31.7.40 sudo helm install tomcat-chart tomcat/ --values tomcat/values.yaml'
+		    sh 'ssh ubuntu@172.31.7.40 sudo helm install tomcat-chart tomcat/ --values tomcat/values.yaml'
 		    }
 		    }
 		 }		
