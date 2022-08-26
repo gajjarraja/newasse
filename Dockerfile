@@ -6,9 +6,9 @@ WORKDIR /usr/local/tomcat/webapps
 
 RUN mv /usr/local/tomcat/webapps.dist/* /usr/local/tomcat/webapps/
 
-#ADD context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml
+ADD context.xml /usr/local/tomcat/webapps/manager/META-INF/context.xml
 
-ADD tomcatuser.xml /usr/local/tomcat/conf/
+ADD tomcat-users.xml /usr/local/tomcat/conf/
 
 VOLUME /var/log/tomcat
 
